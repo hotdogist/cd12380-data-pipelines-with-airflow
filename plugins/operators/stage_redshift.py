@@ -29,7 +29,7 @@ class StageToRedshiftOperator(BaseOperator):
         redshift = PostgresHook(postgres_conn_id=self.conn_id)
         redshift.run(f"DELETE FROM {self.table}")
         self.s3_key = self.s3_key.format(**context)
-        s3_path = f"s3://{self.s3_bucket}/{self.s3_key}")
+        s3_path = f"s3://{self.s3_bucket}/{self.s3_key}"
         redshift.run(f"COPY {self.table} FROM '{s3_path}' ACCESS_KEY_ID '{credentials.access_key}' \
             SECRET_ACCESS_KEY '{credentials.secret_key}' FORMAT AS JSON '{self.json_path}'")
 
